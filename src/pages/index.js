@@ -464,7 +464,7 @@ export default function Home() {
                                                 <tr
                                                     key={
                                                         'f' +
-                                                        i.transactionID.toString
+                                                        i.transactionID.toString()
                                                     }
                                                 >
                                                     {/* <td>{trs.day}</td> */}
