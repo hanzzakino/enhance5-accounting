@@ -461,7 +461,12 @@ export default function Home() {
                                                 </td>
                                             </tr>
                                             {trs.debit.map((i) => (
-                                                <tr>
+                                                <tr
+                                                    key={
+                                                        'f' +
+                                                        i.transactionID.toString
+                                                    }
+                                                >
                                                     {/* <td>{trs.day}</td> */}
                                                     <td>
                                                         {
@@ -478,7 +483,7 @@ export default function Home() {
                                                 </tr>
                                             ))}
                                             {trs.credit.map((i) => (
-                                                <tr>
+                                                <tr key={'g' + i.accountNumber}>
                                                     {/* <td>{trs.day}</td> */}
                                                     <td></td>
                                                     <td>
@@ -682,12 +687,12 @@ export default function Home() {
                                         <td>Credit</td>
                                     </tr>
                                     {Object.keys(accountBalances).map((k) => (
-                                        <tr>
+                                        <tr key={'j' + k}>
                                             <td>
                                                 {k.substring(
                                                     1,
                                                     accountBalances[k].name
-                                                        .lengt
+                                                        .length
                                                 )}
                                             </td>
 
