@@ -233,7 +233,7 @@ export default function TransactionBox({
                         </td>
                     </tr>
                     {debit.map((i) => (
-                        <tr>
+                        <tr key={'b' + i.accountNumber}>
                             <td>{accountNumberList['n' + i.accountNumber]}</td>
                             <td></td>
                             <td></td>
@@ -242,7 +242,7 @@ export default function TransactionBox({
                         </tr>
                     ))}
                     {credit.map((i) => (
-                        <tr>
+                        <tr key={'a' + i.accountNumber}>
                             <td></td>
                             <td>{accountNumberList['n' + i.accountNumber]}</td>
                             <td></td>
