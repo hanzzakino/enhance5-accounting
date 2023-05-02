@@ -5,7 +5,9 @@ export default function TransactionBox({
     currentTransactionID,
     setcurrentTransactionID,
     accountNumberList,
+    accountBalances,
 }) {
+    const [easyMode, setEasymode] = useState(false)
     const [transactionType, setTransactionType] = useState('debit')
     const [currentTransaction, setCurrentTransaction] = useState({
         transactionID: currentTransactionID,
@@ -19,7 +21,7 @@ export default function TransactionBox({
         accountNumber: '101',
         amount: 0,
     })
-    const { accountNumber, amount } = currentTransaction
+    const { accountNumber, amount } = currentAccount
     const onTransactionChange = (e) => {
         if (e.target.name === 'day') {
             setCurrentTransaction((prevState) => ({
@@ -115,6 +117,17 @@ export default function TransactionBox({
             <h2>Input</h2>
             <br />
             <form>
+                <label htmlFor="easymode">Easy Mode </label>
+                <input
+                    onChange={(e) => setEasymode(e.target.checked)}
+                    type="checkbox"
+                    checked={easyMode}
+                    name="easymode"
+                    id="easymode"
+                />
+                <br />
+                <br />
+                <br />
                 <label htmlFor="day">Day: </label>
                 <input
                     value={day > 0 ? day : ''}
@@ -125,7 +138,7 @@ export default function TransactionBox({
                 />
                 <br />
                 <br />
-                <label htmlFor="item">Item: </label>
+                <label htmlFor="item">{'Item/Description:'} </label>
                 <input
                     value={item}
                     onChange={onTransactionChange}
@@ -135,21 +148,9 @@ export default function TransactionBox({
                 />
                 <br />
                 <br />
-                <label htmlFor="type">Type: </label>
-                <select
-                    value={transactionType}
-                    onChange={(e) => setTransactionType(e.target.value)}
-                    type="text"
-                    name="type"
-                    id="type"
-                >
-                    <option value="debit">Debit</option>
-                    <option value="credit">Credit</option>
-                </select>
-                <br />
-                <br />
                 <label htmlFor="accountNumber">Account Title: </label>
                 <select
+                    className="input-select"
                     value={accountNumber}
                     onChange={onAccountChange}
                     name="accountNumber"
@@ -179,6 +180,57 @@ export default function TransactionBox({
                 </select>
                 <br />
                 <br />
+                <label htmlFor="type">{easyMode ? '' : 'Type:'}</label>
+
+                {!easyMode ? (
+                    <select
+                        className="input-select"
+                        value={transactionType}
+                        onChange={(e) => setTransactionType(e.target.value)}
+                        type="text"
+                        name="type"
+                        id="type"
+                    >
+                        <option value="debit">Debit</option>
+                        <option value="credit">Credit</option>
+                    </select>
+                ) : (
+                    <div>
+                        <select
+                            className="input-select"
+                            value={
+                                accountBalances['n' + accountNumber].normalDebit
+                                    ? transactionType === 'debit'
+                                        ? 'increase'
+                                        : 'decrease'
+                                    : transactionType !== 'debit'
+                                    ? 'increase'
+                                    : 'decrease'
+                            }
+                            onChange={(e) =>
+                                setTransactionType(
+                                    accountBalances['n' + accountNumber]
+                                        .normalDebit
+                                        ? e.target.value === 'increase'
+                                            ? 'debit'
+                                            : 'credit'
+                                        : e.target.value !== 'increase'
+                                        ? 'debit'
+                                        : 'credit'
+                                )
+                            }
+                            type="text"
+                            name="type"
+                            id="type"
+                        >
+                            <option value="increase">Increase</option>
+                            <option value="decrease">Decrease</option>
+                        </select>
+                    </div>
+                )}
+
+                <br />
+                <br />
                 <label htmlFor="amount">Amount: </label>
                 <input
                     value={amount}
@@ -195,7 +247,7 @@ export default function TransactionBox({
                 className="default-button"
                 onClick={onAccountSubmit}
             >
-                Add account change
+                Add Entry
             </button>
             <br />
             <br />
@@ -220,12 +272,16 @@ export default function TransactionBox({
             <table className="ledger-table width100p">
                 <tbody>
                     <tr>
-                        <td>Day</td>
-                        <td>Debit</td>
-                        <td>Credit</td>
-                        <td>Info</td>
-                        <td>Debit</td>
-                        <td>Credit</td>
+                        <td className="bold-text accent1-bg white-fg">Day</td>
+                        <td className="bold-text accent1-bg white-fg">Debit</td>
+                        <td className="bold-text accent1-bg white-fg">
+                            Credit
+                        </td>
+                        <td className="bold-text accent1-bg white-fg">Info</td>
+                        <td className="bold-text accent1-bg white-fg">Debit</td>
+                        <td className="bold-text accent1-bg white-fg">
+                            Credit
+                        </td>
                     </tr>
                     <tr>
                         <td rowSpan={debit.length + credit.length + 2}>
@@ -274,7 +330,7 @@ export default function TransactionBox({
                 }
                 onClick={onTransactionSubmit}
             >
-                Submit Entry
+                Submit to Journal Entry
             </button>
 
             <br />

@@ -403,7 +403,7 @@ export default function Home() {
                 }))
             }
         })
-    }, [accountBalances, transactions])
+    }, [accountBalances])
 
     return (
         <>
@@ -432,6 +432,7 @@ export default function Home() {
                             currentTransactionID={currentTransactionID}
                             setcurrentTransactionID={setcurrentTransactionID}
                             accountNumberList={accountNumberList}
+                            accountBalances={accountBalances}
                         />
                         <br />
                         <div className="journal-panel">
@@ -439,12 +440,24 @@ export default function Home() {
                             <table className="ledger-table width100p">
                                 <tbody>
                                     <tr>
-                                        <td>Day</td>
-                                        <td>Debit</td>
-                                        <td>Credit</td>
-                                        <td>Info</td>
-                                        <td>Debit</td>
-                                        <td>Credit</td>
+                                        <td className="bold-text accent1-bg white-fg">
+                                            Day
+                                        </td>
+                                        <td className="bold-text accent1-bg white-fg">
+                                            Debit
+                                        </td>
+                                        <td className="bold-text accent1-bg white-fg">
+                                            Credit
+                                        </td>
+                                        <td className="bold-text accent1-bg white-fg">
+                                            Info
+                                        </td>
+                                        <td className="bold-text accent1-bg white-fg">
+                                            Debit
+                                        </td>
+                                        <td className="bold-text accent1-bg white-fg">
+                                            Credit
+                                        </td>
                                     </tr>
 
                                     {transactions.map((trs) => (
@@ -509,6 +522,16 @@ export default function Home() {
                                             </tr>
                                         </>
                                     ))}
+                                    <tr>
+                                        <td>
+                                            <br />
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <br />
@@ -538,32 +561,78 @@ export default function Home() {
                                 >
                                     <tbody>
                                         <tr>
-                                            <td colSpan={2}>Account Number</td>
-                                            <td>
+                                            <td
+                                                className="bold-text accent1-bg white-fg"
+                                                colSpan={2}
+                                            >
+                                                Account Number
+                                            </td>
+                                            <td className="bold-text">
                                                 {k.substring(
                                                     1,
                                                     accountBalances[k].name
                                                         .lengt
                                                 )}
                                             </td>
-                                            <td colSpan={2}>Account Title</td>
-                                            <td colSpan={3}>
+                                            <td
+                                                className="bold-text accent1-bg white-fg"
+                                                colSpan={2}
+                                            >
+                                                Account Title
+                                            </td>
+                                            <td
+                                                className="bold-text"
+                                                colSpan={3}
+                                            >
                                                 {accountBalances[k].name}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td rowSpan={2} colSpan={2}>
+                                            <td
+                                                className="bold-text accent1-bg white-fg"
+                                                rowSpan={2}
+                                                colSpan={2}
+                                            >
                                                 Date
                                             </td>
-                                            <td rowSpan={2}>Item</td>
-                                            <td rowSpan={2}>PR</td>
-                                            <td rowSpan={2}>Debit</td>
-                                            <td rowSpan={2}>Credit</td>
-                                            <td colSpan={2}>Running Balance</td>
+                                            <td
+                                                className="bold-text accent1-bg white-fg"
+                                                rowSpan={2}
+                                            >
+                                                Item
+                                            </td>
+                                            <td
+                                                className="bold-text accent1-bg white-fg"
+                                                rowSpan={2}
+                                            >
+                                                PR
+                                            </td>
+                                            <td
+                                                className="bold-text accent1-bg white-fg"
+                                                rowSpan={2}
+                                            >
+                                                Debit
+                                            </td>
+                                            <td
+                                                className="bold-text accent1-bg white-fg"
+                                                rowSpan={2}
+                                            >
+                                                Credit
+                                            </td>
+                                            <td
+                                                className="bold-text accent1-bg white-fg"
+                                                colSpan={2}
+                                            >
+                                                Running Balance
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Debit</td>
-                                            <td>Credit</td>
+                                            <td className="bold-text accent1-bg white-fg">
+                                                Debit
+                                            </td>
+                                            <td className="bold-text accent1-bg white-fg">
+                                                Credit
+                                            </td>
                                         </tr>
                                         {accountBalances[k].allBalances.map(
                                             (itm) => (
@@ -596,7 +665,7 @@ export default function Home() {
                                                             'c'
                                                         }
                                                     >
-                                                        GJ-1
+                                                        {itm.item}
                                                     </td>
                                                     <td
                                                         key={
@@ -605,7 +674,7 @@ export default function Home() {
                                                             'h'
                                                         }
                                                     >
-                                                        {itm.item}
+                                                        GJ-1
                                                     </td>
                                                     <td
                                                         key={
